@@ -1,0 +1,198 @@
+from Tkinter import *
+import tkFont
+from gpiozero import LED
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+import time
+##Hardware
+led = LED(23)
+
+##  GUI DEFINITIONS ##
+win = Tk()
+win.title("Task 5.3D Morse Code")
+myFont = tkFont.Font(family='Helvetica',size = 12, weight="bold")
+
+### Label creation
+Lb1 = Label(win, text = "Please enter your name ")
+Lb1.pack()
+
+### Word Limit
+word = StringVar()
+
+def letter_limit(*arg):
+	user_input =text.get()
+	if len(user_input)>12:
+		word.set(user_input[:12])
+word.trace_variable("w",letter_limit)
+
+### Text Box
+textBox = Entry(win, bd = 10, textvariable = word)
+textBox.pack(side=LEFT)
+
+### EVENT FUNCTIONS ###
+def dash():
+	led.on()
+	time.sleep(3)
+	led.off()
+	time.sleep(0.5)
+
+def dot():
+	led.on()
+	time.sleep(0.5)
+	led.off()
+	time.sleep(0.5)
+
+
+def Blink(letter):
+	if letter == "a":
+		dot()
+		dash()
+
+	if letter == "b":
+                dash()
+		dot()
+		dot()
+		dot()
+
+	if letter == "c":
+		dash()
+                dot()
+                dash()
+		dot()
+
+	if letter == "d":
+                dash()
+		dot()
+		dot()
+
+	if letter == "e":
+                dot()
+
+	if letter == "f":
+		dot()
+		dot()
+
+                dash()
+                dot()
+
+	if letter == "g":
+                dash()
+                dash()
+                dot()
+	if letter == "h":
+                dot()
+                dot()
+                dot()
+		dot()
+
+	if letter == "i":
+                dot()
+                dot()
+
+	if letter == "j":
+		dot()
+                dash()
+		dash()
+		dash()
+
+	if letter == "k":
+                dash()
+                dot()
+               	dash()
+
+	if letter == "l":
+		dot()
+                dash()
+                dot()
+                dot()
+
+	if letter == "m":
+                dash()
+                dash()
+
+	if letter == "n":
+                dash()
+                dot()
+
+	if letter == "o":
+                dash()
+                dash()
+                dash()
+
+	if letter == "p":
+		dot()
+                dash()
+                dash()
+                dot()
+
+	if letter == "q":
+		dash()
+                dash()
+                dot()
+                dash()
+
+	if letter == "r":
+                dot()
+                dash()
+                dot()
+
+	if letter == "s":
+                dot()
+                dot()
+                dot()
+
+	if letter == "t":
+                dash()
+
+	if letter == "u":
+                dot()
+                dot()
+                dash()
+
+	if letter == "v":
+                dot()
+                dot()
+                dot()
+		dash()
+
+	if letter == "w":
+		dot()
+                dash()
+                dash()
+                dot()
+
+	if letter == "x":
+                dash()
+                dot()
+                dot()
+		dash()
+
+	if letter == "y":
+                dash()
+                dot()
+                dash()
+		dash()
+
+	if letter =="z":
+                dash()
+                dot()
+		dash()
+		dot()
+
+def runProgram():
+	text = textBox.get()
+	for answer in text.lower():
+		Blink(answer)
+
+def closeProgram():
+	GPIO.cleanup()
+	win.quit()
+
+### WIDGETS ###
+generateButton = Button(win, text = 'Generate', font = myFont, command = runProgram,bg ='green',height =1, width = 5)
+generateButton.pack(side=TOP)
+
+exitButton = Button(win, text = 'Exit', font = myFont, command = closeProgram,bg ='red',height =1, width = 5)
+exitButton.pack(side= BOTTOM)
+
+win.mainloop() 
